@@ -2,6 +2,26 @@ import numpy as np
 from random import randint
 import plotly.express as px
 
+'''
+There is 4 different type of coordinate radar. 
+
+The values are the each index of rows and index of columns.
+
+The 'Front' radar calculate a row to up from the bottom of the matrix.
+And the class could calculate two columns. One column from the right side and one the left side and these columns run into the row.
+
+The 'Hind' radar calculate a row to bottom from the top of the matrix.
+And the class could calculate two columns. One column from the right side and one the left side and these columns run into the row.
+
+The 'Right' radar calculate a column to very bottom to very up.
+And could calculate a row from the right of the matrix and this row run into the column.
+
+The 'Left' radar calculate a column to very bottom to very up.
+And could calculate a row from the left of the matrix and this row run into the column. 
+
+Where the row and the columns meet the value of the row and the value of the columns are added.
+'''
+
 
 class FrontRadar:
     def __init__(self):
@@ -57,7 +77,7 @@ class HindRadar:
 
     def hind_view_radar(self):
 
-        hind_map = np.zeros((self.map_size, self.map_size), dtype=int) 
+        hind_map = np.zeros((self.map_size, self.map_size), dtype=int)
 
         self.calc_only_lower_row(hind_map)
 
@@ -121,12 +141,12 @@ class GetRadarsAttributes(FrontRadar, HindRadar, LeftRadar, RightRadar):
     def __init__(self):
         super().__init__()
 
-    def get_attributes_to_radar(self, map_size=0, front_value=0, lower_value=0, value_from_right=0, value_from_left=0):  
-        self.map_size = map_size  
-        self.front_value = front_value  
-        self.lower_value = lower_value  
-        self.value_from_right = value_from_right  
-        self.value_from_left = value_from_left  
+    def get_attributes_to_radar(self, map_size=0, front_value=0, lower_value=0, value_from_right=0, value_from_left=0):
+        self.map_size = map_size
+        self.front_value = front_value
+        self.lower_value = lower_value
+        self.value_from_right = value_from_right
+        self.value_from_left = value_from_left
 
 
 class GetRadarsCoordinates(GetRadarsAttributes):
@@ -204,12 +224,14 @@ class RadarVisualisation:
         fig.show()
 
 
-obj = GetRadarsDatas()
-for i in range(1):
-    obj.get_attributes_to_radar(map_size=50, front_value=0, lower_value=randint(1, 40), value_from_right=randint(1, 40), value_from_left=randint(1, 40))
-    obj.get_coordinates_from_hind_radar()
-    obj.set_hind_radar_datas()
+if __name__ == "__main__":
+    obj = GetRadarsDatas()
 
-obj.print()
+    for i in range(1):
+        obj.get_attributes_to_radar(map_size=50, front_value=0, lower_value=randint(1, 40), value_from_right=randint(1, 40), value_from_left=randint(1, 40))
+        obj.get_coordinates_from_hind_radar()
+        obj.set_hind_radar_datas()
 
-RadarVisualisation().data_visualization(obj.get_hind_radar_datas())
+    obj.print()
+
+    RadarVisualisation().data_visualization(obj.get_hind_radar_datas())
